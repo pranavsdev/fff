@@ -1,0 +1,86 @@
+{
+	"name": "17f1f8071d3fa52d06468b1d647a2eba",
+	"overall_conf": "0.79",
+	"path": "17f1f8071d3fa52d06468b1d647a2eba.wav",
+	"word_count": "10",
+	"SpeakerList": [{
+		"spkid": "spk1"
+	}, {
+		"spkid": "spk2"
+	}],
+	"SegmentList": [{
+		"spkid": "spk1",
+		"question": "False",
+		"start": "0.67",
+		"end": "1.79",
+		"words": [{
+			"text": "this",
+			"conf": "1.00",
+			"dur": "0.24",
+			"stime": "0.88"
+		}, {
+			"text": "is",
+			"conf": "1.00",
+			"dur": "0.18",
+			"stime": "1.12"
+		}, {
+			"text": "a",
+			"conf": "0.84",
+			"dur": "0.09",
+			"stime": "1.30"
+		}, {
+			"text": "test",
+			"conf": "0.66",
+			"dur": "0.36",
+			"stime": "1.42"
+		}]
+	}, {
+		"spkid": "spk2",
+		"question": "False",
+		"start": "0.67",
+		"end": "1.79",
+		"words": [{
+			"text": "this",
+			"conf": "1.00",
+			"dur": "0.24",
+			"stime": "0.88"
+		}, {
+			"text": "is",
+			"conf": "1.00",
+			"dur": "0.18",
+			"stime": "1.12"
+		}, {
+			"text": "a",
+			"conf": "0.84",
+			"dur": "0.09",
+			"stime": "1.30"
+		}, {
+			"text": "test",
+			"conf": "0.68",
+			"dur": "0.33",
+			"stime": "1.45"
+		}]
+	}, {
+		"spkid": "spk1",
+		"question": "False",
+		"start": "1.79",
+		"end": "2.18",
+		"words": [{
+			"text": "yeah",
+			"conf": "0.45",
+			"dur": "0.06",
+			"stime": "1.94"
+		}]
+	}, {
+		"spkid": "spk2",
+		"question": "False",
+		"start": "1.79",
+		"end": "2.18",
+		"words": [{
+			"text": "yeah",
+			"conf": "0.46",
+			"dur": "0.06",
+			"stime": "1.94"
+		}]
+	}]
+}
