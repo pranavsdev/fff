@@ -40,10 +40,8 @@ def sendSMS(text,tonumber):
     headers = {
         'Content-Type': "application/x-www-form-urlencoded",
         'Authorization': "Bearer YOUR_BEARE_TOKEN",
-        'User-Agent': "PostmanRuntime/7.17.1",
         'Accept': "*/*",
         'Cache-Control': "no-cache",
-        'Postman-Token': "ae0d9bff-7ca8-4988-a6fd-083f0727f1de,90d43f4e-fd63-485b-944e-21a5ce7d89ee",
         'Host': "api-prd.kpn.com",
         'Accept-Encoding': "gzip, deflate",
         }
