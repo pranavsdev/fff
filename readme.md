@@ -1,3 +1,7 @@
+# Documentation for APIs
+    - SMS : https://developer.kpn.com/marketplace/nexmo-sms-api-documentation
+    - Speech to text : https://developer.kpn.com/marketplace/contexta360-speech-text-api-documentation
+
 # About
     This kit give you and idea about two things: 
         - how can you enable a chatbot through sms
