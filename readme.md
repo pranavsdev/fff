@@ -40,8 +40,8 @@
         (2) pip insall flask_restful
 
     - For chatbot
-        ```python chatbot.py```
+        ````python chatbot.py````
         You can either host your application on a server that can be availbale on internet. The second option is to expose your local host via ngrok on the port your localhost is running. ```https://dashboard.ngrok.com/get-started```
 
     - For contexta
-        ```python contexta.py```
+        ````python contexta.py````
