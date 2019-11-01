@@ -1,0 +1,938 @@
+{
+	"info": {
+		"_postman_id": "0ab85d08-eecb-4f42-8180-615ac56fc7aa",
+		"name": "Speech To Text - Contexta",
+		"description": "Contexta speech API is a highly accurate and customisable speech-to-text service that can transcribe audio files to text. Currently it supports Dutch and English and more languages will follow soon.\r\n\r\n    \r\nThe service is asynchronous, which means you upload the audio in one API call and get a transcriptionId in return while the transcription process is running on the server. By checking the status with the /transcripts/status service - or by providing a callback url with your create request - you can find out when the transcription is done and download it with the transcripts/show request.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v 1.0.0",
+			"item": [
+				{
+					"name": "/decoders",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "v5",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/decoders",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"decoders"
+							]
+						},
+						"description": "Get a list of available decoders to choose from, with a title and a simple description."
+					},
+					"response": []
+				},
+				{
+					"name": "/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"if (responseCode.code === 200){",
+									"    var data = JSON.parse(responseBody);",
+									"    postman.setEnvironmentVariable(\"contexta_transcriptId\", data.data.transcriptId);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{contexta_access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "callbackurl",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "data",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "audio",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "decoder",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "numSpeakers",
+									"value": "4",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/transcripts/create",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"transcripts",
+								"create"
+							]
+						},
+						"description": "To create a new transcript you have to follow these steps: \r\n        1: provide an audio file with the conversation to be transcribed. The file must honor the following conditions: \r\n          \r\n\t\t\t  a: File format is **.wav**, **.mp3** or **.opus**\r\n\t\t\t  \r\n\t\t\t  b: File is mono channel, bitrate: 256k, sampling rate: 16khz, encoding: pcm_s16le\r\n          \r\n        2: Provide the appropriate decoder id (retreived by GET /decoders), depending on the laguage spoken in the audio file. \r\n        3: An optional callback URL can be provided where a notification will be send when the transcription process is finished.\r\n        4: An obtional json object can be provided, which is passed through as is to the callback url (if given) when transcript is done."
+					},
+					"response": []
+				},
+				{
+					"name": "/status/{transcriptId}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/transcripts/status/{{contexta_transcriptId}}",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"transcripts",
+								"status",
+								"{{contexta_transcriptId}}"
+							]
+						},
+						"description": "Check the status of the transcription process for a previously uploaded audio file"
+					},
+					"response": []
+				},
+				{
+					"name": "/transcripts/{transcriptId}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{contexta_access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/transcripts/{{contexta_transcriptId}}",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"transcripts",
+								"{{contexta_transcriptId}}"
+							]
+						},
+						"description": "Produce xml file with the transcript of a previously uploaded audio file."
+					},
+					"response": []
+				},
+				{
+					"name": "/transcripts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "v4",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/transcripts",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"transcripts"
+							]
+						},
+						"description": "Produce xml file with the transcript of a previously uploaded audio file."
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "80673099-5427-4c79-96d8-0444f11b1107",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "daf238a5-33d6-4de2-94a3-e2a6175c268c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "v 1.0.1",
+			"item": [
+				{
+					"name": "/clients/register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9a687ee3-b758-469a-8fd1-0bd30822095f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/clients/register",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"clients",
+								"register"
+							]
+						},
+						"description": "To create a new transcript you have to follow these steps: \r\n        1: provide an audio file with the conversation to be transcribed. The file must honor the following conditions: \r\n          \r\n\t\t\t  a: File format is **.wav**, **.mp3** or **.opus**\r\n\t\t\t  \r\n\t\t\t  b: File is mono channel, bitrate: 256k, sampling rate: 16khz, encoding: pcm_s16le\r\n          \r\n        2: Provide the appropriate decoder id (retreived by GET /decoders), depending on the laguage spoken in the audio file. \r\n        3: An optional callback URL can be provided where a notification will be send when the transcription process is finished.\r\n        4: An obtional json object can be provided, which is passed through as is to the callback url (if given) when transcript is done."
+					},
+					"response": []
+				},
+				{
+					"name": "/clients/update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9a687ee3-b758-469a-8fd1-0bd30822095f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/clients/update",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"clients",
+								"update"
+							]
+						},
+						"description": "To create a new transcript you have to follow these steps: \r\n        1: provide an audio file with the conversation to be transcribed. The file must honor the following conditions: \r\n          \r\n\t\t\t  a: File format is **.wav**, **.mp3** or **.opus**\r\n\t\t\t  \r\n\t\t\t  b: File is mono channel, bitrate: 256k, sampling rate: 16khz, encoding: pcm_s16le\r\n          \r\n        2: Provide the appropriate decoder id (retreived by GET /decoders), depending on the laguage spoken in the audio file. \r\n        3: An optional callback URL can be provided where a notification will be send when the transcription process is finished.\r\n        4: An obtional json object can be provided, which is passed through as is to the callback url (if given) when transcript is done."
+					},
+					"response": []
+				},
+				{
+					"name": "/clients/change_password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9a687ee3-b758-469a-8fd1-0bd30822095f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/clients/change_password",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"clients",
+								"change_password"
+							]
+						},
+						"description": "To create a new transcript you have to follow these steps: \r\n        1: provide an audio file with the conversation to be transcribed. The file must honor the following conditions: \r\n          \r\n\t\t\t  a: File format is **.wav**, **.mp3** or **.opus**\r\n\t\t\t  \r\n\t\t\t  b: File is mono channel, bitrate: 256k, sampling rate: 16khz, encoding: pcm_s16le\r\n          \r\n        2: Provide the appropriate decoder id (retreived by GET /decoders), depending on the laguage spoken in the audio file. \r\n        3: An optional callback URL can be provided where a notification will be send when the transcription process is finished.\r\n        4: An obtional json object can be provided, which is passed through as is to the callback url (if given) when transcript is done."
+					},
+					"response": []
+				},
+				{
+					"name": "/clients/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9a687ee3-b758-469a-8fd1-0bd30822095f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"user\": \"api_developer@kpn.com\",\r\n\"password\": \"Password1\"\r\n}"
+						},
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/clients/login",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"clients",
+								"login"
+							]
+						},
+						"description": "To create a new transcript you have to follow these steps: \r\n        1: provide an audio file with the conversation to be transcribed. The file must honor the following conditions: \r\n          \r\n\t\t\t  a: File format is **.wav**, **.mp3** or **.opus**\r\n\t\t\t  \r\n\t\t\t  b: File is mono channel, bitrate: 256k, sampling rate: 16khz, encoding: pcm_s16le\r\n          \r\n        2: Provide the appropriate decoder id (retreived by GET /decoders), depending on the laguage spoken in the audio file. \r\n        3: An optional callback URL can be provided where a notification will be send when the transcription process is finished.\r\n        4: An obtional json object can be provided, which is passed through as is to the callback url (if given) when transcript is done."
+					},
+					"response": []
+				},
+				{
+					"name": "/clients/me",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9a687ee3-b758-469a-8fd1-0bd30822095f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "callbackurl",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "data",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "audio",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "decoder",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "numSpeakers",
+									"value": "4",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/clients/me",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"clients",
+								"me"
+							]
+						},
+						"description": "To create a new transcript you have to follow these steps: \r\n        1: provide an audio file with the conversation to be transcribed. The file must honor the following conditions: \r\n          \r\n\t\t\t  a: File format is **.wav**, **.mp3** or **.opus**\r\n\t\t\t  \r\n\t\t\t  b: File is mono channel, bitrate: 256k, sampling rate: 16khz, encoding: pcm_s16le\r\n          \r\n        2: Provide the appropriate decoder id (retreived by GET /decoders), depending on the laguage spoken in the audio file. \r\n        3: An optional callback URL can be provided where a notification will be send when the transcription process is finished.\r\n        4: An obtional json object can be provided, which is passed through as is to the callback url (if given) when transcript is done."
+					},
+					"response": []
+				},
+				{
+					"name": "/decoders",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/decoders",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"decoders"
+							]
+						},
+						"description": "Get a list of available decoders to choose from, with a title and a simple description."
+					},
+					"response": []
+				},
+				{
+					"name": "/create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9a687ee3-b758-469a-8fd1-0bd30822095f",
+								"exec": [
+									"if (responseCode.code === 200){",
+									"    var data = JSON.parse(responseBody);",
+									"    postman.setEnvironmentVariable(\"contexta_transcriptId\", data.data.transcriptId);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "callbackurl",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "data",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "audio",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "decoder",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "numSpeakers",
+									"value": "4",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/transcripts/create",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"transcripts",
+								"create"
+							]
+						},
+						"description": "To create a new transcript you have to follow these steps: \r\n        1: provide an audio file with the conversation to be transcribed. The file must honor the following conditions: \r\n          \r\n\t\t\t  a: File format is **.wav**, **.mp3** or **.opus**\r\n\t\t\t  \r\n\t\t\t  b: File is mono channel, bitrate: 256k, sampling rate: 16khz, encoding: pcm_s16le\r\n          \r\n        2: Provide the appropriate decoder id (retreived by GET /decoders), depending on the laguage spoken in the audio file. \r\n        3: An optional callback URL can be provided where a notification will be send when the transcription process is finished.\r\n        4: An obtional json object can be provided, which is passed through as is to the callback url (if given) when transcript is done."
+					},
+					"response": []
+				},
+				{
+					"name": "/status/{transcriptId}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/transcripts/status/{{contexta_transcriptId}}",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"transcripts",
+								"status",
+								"{{contexta_transcriptId}}"
+							]
+						},
+						"description": "Check the status of the transcription process for a previously uploaded audio file"
+					},
+					"response": []
+				},
+				{
+					"name": "/transcripts/{transcriptId}",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/transcripts/{{contexta_transcriptId}}",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"transcripts",
+								"{{contexta_transcriptId}}"
+							]
+						},
+						"description": "Produce xml file with the transcript of a previously uploaded audio file."
+					},
+					"response": []
+				},
+				{
+					"name": "/transcripts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "api-version",
+								"value": "v4",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{environment}}/communication/contexta/speech-to-text/transcripts",
+							"protocol": "https",
+							"host": [
+								"{{environment}}"
+							],
+							"path": [
+								"communication",
+								"contexta",
+								"speech-to-text",
+								"transcripts"
+							]
+						},
+						"description": "Produce xml file with the transcript of a previously uploaded audio file."
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f5ed9f8d-2576-4b6b-8bc9-0098f6d88f3c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "eb2a8f50-7001-4ca0-bfe9-75fecacdee19",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Generate AccessToken",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ac01a0f-2810-4fed-bf77-71097e866a2e",
+						"exec": [
+							"if (responseCode.code === 200){",
+							"    var data = JSON.parse(responseBody);",
+							"    postman.setEnvironmentVariable(\"access_token\", data.access_token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{environment}}/oauth/client_credential/accesstoken?grant_type=client_credentials",
+					"protocol": "https",
+					"host": [
+						"{{environment}}"
+					],
+					"path": [
+						"oauth",
+						"client_credential",
+						"accesstoken"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials"
+						}
+					]
+				},
+				"description": "This API resource is used for the genration of the Access Token."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "31df9b48-2a33-41ab-8768-f28a8c370576",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ceecf1e3-52e9-4f19-af0d-1c8c92dec3ac",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "b60f83b0-18bd-458c-8264-8d126cc644f7",
+			"key": "contexta_access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "5356d66a-c905-4786-9cfc-0808db89e7fe",
+			"key": "contexta_api_key",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"id": "0ff52341-8760-4f51-b3ef-fb6c1dab0e8b",
+			"key": "contexta_client_id",
+			"value": "DtFM0ZLvNBGE2OCabK3GAhsPZJF1JkzB",
+			"type": "string"
+		},
+		{
+			"id": "3dc1d07f-602d-456f-9019-6b7d6225f933",
+			"key": "contexta_client_secret",
+			"value": "3jpUd1ZJOGTJOMnU",
+			"type": "string"
+		},
+		{
+			"id": "5ccd141e-9436-4d3a-b884-bcd7439f74e9",
+			"key": "contexta_transcriptId",
+			"value": "5b33ab0430159f0024302bdb",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
