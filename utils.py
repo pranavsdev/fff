@@ -42,7 +42,7 @@ def sendSMS(text,tonumber):
     payload = "from=3197010240299&to="+tonumber+"&text="+text
     headers = {
         'Content-Type': "application/x-www-form-urlencoded",
-        'Authorization': "Bearer xtCvqnBFHdHgMPCjA0gVvgRGzHEU",
+        'Authorization': "Bearer YOUR_TOKEN",
         'Accept': "*/*",
         'Cache-Control': "no-cache",
         'Host': "api-prd.kpn.com",
