@@ -36,10 +36,10 @@ def sendSMS(text,tonumber):
 
     url = "https://api-prd.kpn.com/communication/nexmo/sms/send"
 
-    payload = "from=3197010240299&to="+tonumber+"&text="+text
+    payload = "from=VIRTUAL_NUMBER&to="+tonumber+"&text="+text
     headers = {
         'Content-Type': "application/x-www-form-urlencoded",
-        'Authorization': "Bearer XtVsgh3bkeCCV6YHGzfPTZQJOoKQ",
+        'Authorization': "Bearer YOUR_BEARE_TOKEN",
         'User-Agent': "PostmanRuntime/7.17.1",
         'Accept': "*/*",
         'Cache-Control': "no-cache",
