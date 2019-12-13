@@ -4,13 +4,13 @@ def contextainfo():
     with open('speech-sample.json') as json_file:
         data = json.load(json_file)
 
-        speech = []
+    speech = []
 
-        for segmentList in data['SegmentList']:
-            for word in segmentList['words']:
-                text = word['text']
-                speech.append(text)
-        pickanswer(speech)
+    for segmentList in data['SegmentList']:
+        for word in segmentList['words']:
+            text = word['text']
+            speech.append(text)
+    pickanswer(speech)
 
 def pickanswer(text):
     file = open("contexta-vocab.csv", "r")

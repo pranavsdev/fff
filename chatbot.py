@@ -1,7 +1,6 @@
 from flask_restful import Resource, Api, reqparse
-from flask.json import jsonify
-from flask import request
 from utils import pickanswer
+
 class Chatbot(Resource):
 
     def post(self):
@@ -12,10 +11,10 @@ class Chatbot(Resource):
         args = parser.parse_args()
 
         msisdn = args['msisdn']
-        to = args["to"]
-        messageId = args["messageId"]
+        # to = args["to"]
+        # messageId = args["messageId"]
         text = args["text"]
-        category = args["type"]
+        # category = args["type"]
 
         pickanswer(text,msisdn)
 
