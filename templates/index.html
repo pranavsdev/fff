@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}
+API Store GroSkill Workshop
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Welcome to the GroSkill Workshop</h1>
+    <p>We are going to use this page to get the access token in order to start with the workshop</p>
+</div>
+{% if data %}
+  {% if data.error %}
+  <p>Error reason: {{data.error.name}}</p>
+  {% else %}
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Access Token</h1>
+      <p class="lead">Add "{{data.access_token}}" to your header</p>
+      <p>Example: -h "Authorization: Bearer {{data.access_token}}"</p>
+      <form action="/" method="POST">
+        <input type="hidden" name="clientid" id="clientid" value="{{data.input.client_id}}">
+        <input type="hidden" name="clientsecret" id="clientsecret" value="{{data.input.client_secret}}">
+        <button type="submit" class="btn btn-primary">New access token</button>
+      </form>
+    </div>
+  </div>
+  
+  {% endif %}
+{% else %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Get Access Token for the first time</h1>
+    <form action="/" method="POST">
+      <div class="row">
+        <div class="col">
+            <label for="clientid">Client ID:</label>
+        </div>
+        <div class="col">
+            <input name="clientid" id="clientid">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            <label for="clientsecret">Client Secret:</label>
+        </div>
+        <div class="col">
+            <input name="clientsecret" id="clientsecret">
+        </div>
+      </div>
+      <div class="row">
+        <button type="submit" class="btn btn-primary">Get access token</button>
+      </div>
+    </form> 
+  </div>
+</div>
+{% endif %}
+{% endblock %}
