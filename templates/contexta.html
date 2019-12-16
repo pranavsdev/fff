@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}
+API Store GroSkill Workshop
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Contexta - get intentions</h1>
+    <p>We are going to use this page to get the result after analyzing the intentions of a given transcription</p>
+</div>
+{% if data.error %}
+<p>Error reason: {{data.error.name}}</p>
+{% else %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Intentions</h1>
+    {% if data|length  == 0 %}
+      No speaker could be identified.
+    {% elif data|length == 1 %}
+      We identified a speaker with intent:
+      {{data.value()}}
+    {% else %}
+      We identified {{ data|length }} speakers.
+      <ul> 
+      {% for key, value in data.items() %}
+        <li>{{key}}: {{ value }}</li> 
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
