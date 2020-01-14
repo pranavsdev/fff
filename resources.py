@@ -137,4 +137,4 @@ class Contexta(Resource):
             target = fields[0]
             words = fields[1:]
             for word in words:
-                vocabulary[word].append(target)
+                self.vocabulary[word].append(target)
